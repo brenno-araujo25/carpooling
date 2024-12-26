@@ -1,0 +1,14 @@
+**/pnpm-lock.yaml
+**/yarn.lock
+**/package-lock.json
+**/node_modules
+**/.env
+**/build
+**/dist
+**/Dockerfile
+docker-compose.yml
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+*.code-workspace

@@ -1,0 +1,75 @@
+services:
+  # Banco de dados
+  db:
+    container_name: carpooling-db
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - carpooling-network
+
+  # Gateway de API para os serviços
+  api-gateway:
+    container_name: carpooling-api-gateway
+    build: ./api-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - auth-service
+      - ride-service
+    environment:
+      env_file: ".env"
+    networks:
+      - carpooling-network
+
+  # Serviços: usuário, autenticação e corrida
+  user-service:
+    container_name: user-service
+    build: ./services/user-service
+    ports:
+      - "4000:4000"
+    environment:
+      env_file: ".env"
+    depends_on:
+      - db
+    networks:
+      - carpooling-network
+  
+  auth-service:
+    container_name: auth-service
+    build: ./services/auth-service
+    ports:
+      - "4001:4001"
+    environment:
+      env_file: ".env"
+    depends_on:
+      - db
+    networks:
+      - carpooling-network
+  
+  ride-service:
+    container_name: ride-service
+    build: ./services/ride-service
+    ports:
+      - "4002:4002"
+    environment:
+      env_file: ".env"
+    depends_on:
+      - db
+    networks:
+      - carpooling-network
+  
+# Redes e volumes para os serviços poderem se comunicar
+networks:
+  carpooling-network:
+    driver: bridge
+
+volumes:
+  db-data:

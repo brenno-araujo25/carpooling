@@ -1,0 +1,14 @@
+**/node_modules
+**/.env
+**/build
+**/dist
+
+# ignora lock files
+**/pnpm-lock.yaml
+**/yarn.lock
+**/package-lock.json
+
+# ignora arquivos de configuração de IDE
+.vscode/
+.idea/
+*.code-workspace
