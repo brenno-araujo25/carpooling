@@ -1,13 +1,12 @@
-FROM node:21.7.1
+FROM node:18-slim
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
-COPY pnpm-lock.yaml ./
+# copia somente os arquivos essenciais para instalar as dependências
+COPY package.json pnpm-lock.yaml ./
 
-# use pnpm
-RUN npm install -g pnpm
-RUN pnpm install
+# instala o PNPM e as dependências do projeto
+RUN npm install -g pnpm && pnpm install --frozen-lockfile
 
 COPY . .
 
