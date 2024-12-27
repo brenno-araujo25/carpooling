@@ -8,8 +8,9 @@ app.register(userRoutes)
 
 const start = async () => {
     try {
-        await app.listen(config.USER_SERVICE_PORT)
-        app.log.info(`servidor rodando na porta ${app.server.address().port}`)
+        const port = config.USER_SERVICE_PORT
+        await app.listen({ port })
+        app.log.info(`Servidor rodando na porta ${port}`)
     } catch (err) {
         app.log.error(err)
         process.exit(1)
