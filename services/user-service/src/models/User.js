@@ -36,4 +36,9 @@ const User = sequelize.define('User', {
     timestamps: false,
 });
 
+// apenas usar o sync em ambiente de desenvolvimento
+sequelize.sync()
+    .then(() => console.log('Tabela de usuários criada!'))
+    .catch(console.error);
+
 export default User;
