@@ -22,10 +22,10 @@ services:
       - "3000:3000"
     depends_on:
       - user-service
-      - auth-service
-      - ride-service
-    environment:
-      env_file: ".env"
+      # - auth-service
+      # - ride-service
+    env_file:
+      - .env
     networks:
       - carpooling-network
 
@@ -35,36 +35,36 @@ services:
     build: ./services/user-service
     ports:
       - "4000:4000"
-    environment:
-      env_file: ".env"
+    env_file:
+      - .env
     depends_on:
       - db
     networks:
       - carpooling-network
   
-  auth-service:
-    container_name: auth-service
-    build: ./services/auth-service
-    ports:
-      - "4001:4001"
-    environment:
-      env_file: ".env"
-    depends_on:
-      - db
-    networks:
-      - carpooling-network
+  # auth-service:
+  #   container_name: auth-service
+  #   build: ./services/auth-service
+  #   ports:
+  #     - "4001:4001"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - carpooling-network
   
-  ride-service:
-    container_name: ride-service
-    build: ./services/ride-service
-    ports:
-      - "4002:4002"
-    environment:
-      env_file: ".env"
-    depends_on:
-      - db
-    networks:
-      - carpooling-network
+  # ride-service:
+  #   container_name: ride-service
+  #   build: ./services/ride-service
+  #   ports:
+  #     - "4002:4002"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - db
+  #   networks:
+  #     - carpooling-network
   
 # Redes e volumes para os serviços poderem se comunicar
 networks:
