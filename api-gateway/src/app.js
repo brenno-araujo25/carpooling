@@ -7,7 +7,10 @@ const start = async () => {
 
     try {
         const port = config.GATEWAY_PORT
-        gateway.listen(port)
+        gateway.listen({
+            port,
+            host: '0.0.0.0'
+        })
         console.log(`API Gateway rodando na porta ${port}`)
     } catch (error) {
         console.error(`Erro ao iniciar o servidor: ${error}`)

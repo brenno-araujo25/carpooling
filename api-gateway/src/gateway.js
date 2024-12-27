@@ -15,22 +15,26 @@ export function createGateway() {
     fastify.register(proxy, {
         upstream: USER_SERVICE_URL,
         prefix: '/api/users',
-        rewritePrefix: '/users',
+        rewritePrefix: '/',
     })
 
     // serviço de autenticação
     fastify.register(proxy, {
         upstream: AUTH_SERVICE_URL,
         prefix: '/api/auth',
-        rewritePrefix: '/auth',
+        rewritePrefix: '/',
     })
 
     // serviço de caronas
     fastify.register(proxy, {
         upstream: RIDE_SERVICE_URL,
         prefix: '/api/rides',
-        rewritePrefix: '/rides',
+        rewritePrefix: '/',
     })
 
+    // rota de saúde
+    fastify.get('/health', async (request, reply) => {
+        return { status: 'ok' }
+    })
     return fastify
 }
