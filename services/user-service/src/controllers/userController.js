@@ -1,40 +1,40 @@
 import User from "../models/User.js"
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, reply) => {
   try {
     if (!req.body.cpf || !req.body.username || !req.body.password || !req.body.email || !req.body.role) {
-      return res.status(400).json({ error: 'Informe todos os campos obrigatórios!' })
+      return reply.status(400).send({ error: 'Dados obrigatórios faltando!' })
     }
     const user = await User.create(req.body)
-    return res.status(201).json(user)
+    return reply.status(201).send(user)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    return reply.status(500).send({ error: error.message })
   }
 }
 
-export const getUsers = async (req, res) => {
+export const getUsers = async (req, reply) => {
   try {
     const users = await User.findAll()
-    return res.status(200).json(users)
+    return reply.status(200).send(users)
   } catch (error) {
-    return res.status(500).json({ error: error.message })
+    return reply.status(500).send({ error: error.message })
   }
 }
 
-export const getUserByUsername = async (req, res) => {
+export const getUserByUsername = async (req, reply) => {
     try {
         const { username } = req.params
         const user = await User.findOne({ where: { username: username } })
         if (user) {
-            return res.status(200).json(user)
+            return reply.status(200).send(user)
         }
-        return res.status(404).json({ error: 'Usuário não encontrado!' })
+        return reply.status(404).send({ error: 'Usuário não encontrado!' })
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return reply.status(500).send({ error: error.message })
     }
 }
 
-export const updateUser = async (req, res) => {
+export const updateUser = async (req, reply) => {
     try {
         const { id } = req.params
         const [updated] = await User.update(req.body, {
@@ -42,24 +42,24 @@ export const updateUser = async (req, res) => {
         })
         if (updated) {
             const updatedUser = await User.findOne({ where: { id: id } })
-            return res.status(200).json(updatedUser)
+            return reply.status(200).send(updatedUser)
         }
-        return res.status(404).json({ error: 'Usuário não encontrado!' })
+        return reply.status(404).send({ error: 'Usuário não encontrado!' })
     }
     catch (error) {
-        return res.status(500).json({ error: error.message })
+        return reply.status(500).send({ error: error.message })
     }
 }
 
-export const deleteUser = async (req, res) => {
+export const deleteUser = async (req, reply) => {
     try {
         const { id } = req.params
         const deleted = await User.destroy({ where: { id: id } })
         if (deleted) {
-            return res.status(204).send()
+            return reply.status(204).send({ message: 'Usuário deletado com sucesso!' })
         }
-        return res.status(404).json({ error: 'Usuário não encontrado!' })
+        return reply.status(404).send({ error: 'Usuário não encontrado!' })
     } catch (error) {
-        return res.status(500).json({ error: error.message })
+        return reply.status(500).send({ error: error.message })
     }
 }
