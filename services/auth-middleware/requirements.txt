@@ -1,5 +1,0 @@
-fastapi
-PyJWT
-uvicorn
-python-dotenv
-pydantic

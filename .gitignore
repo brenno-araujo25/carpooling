@@ -2,6 +2,8 @@
 **/.env
 **/build
 **/dist
+**/__pycache__
+**/venv
 
 # ignora lock files
 **/pnpm-lock.yaml
